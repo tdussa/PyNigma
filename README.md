@@ -34,6 +34,7 @@ specified.  For instance,
 + `-r "I II III"`
 + `-r "I, II, III"`
 + `-r I/II/III`
+
 all select rotors I, II, and III.
 
 Examples for identical rotor ring settings:
