@@ -89,6 +89,18 @@ for item in range(26):
     settings['plugboard'][item] = item
 
 
+#
+# Helper functions
+#
+
+# Split parameter string into list, normalizing it
+# For splitting, this function in particular accepts a number of delimiter
+# characters (or strings)
+def split_parameter(input):
+    for delimiter in [',', '.', ';', ':', '-', '_', '+', '/']:
+        input = input.replace(delimiter, ' ')
+    return(input.upper().split())
+
 
 # Argument parsing
 parser = ArgumentParser()
@@ -112,7 +124,7 @@ if args.reflector:
 # Process plugboard settings
 plugboard = []
 if args.plugboard:
-    plugboard = args.plugboard.replace(',', ' ').replace('/', ' ').upper().split()
+    plugboard = split_parameter(args.plugboard)
     if not (len(plugboard)) in range(14):
         print('ERROR: Illegal plugboard specification: {}.  Maximum number of plugs is 13.'.format(plugboard))
         sys.exit(1)
@@ -132,7 +144,7 @@ if args.plugboard:
 
 # Process rotor settings
 if args.rotors:
-    settings['rotors'] = args.rotors.replace(',', ' ').replace('/', ' ').upper().split()
+    settings['rotors'] = split_parameter(args.rotors)
     if not len(settings['rotors']) == 3:
         print('ERROR: Illegal number of rotors: {}.  Only three rotors supported.'.format(len(settings['rotors'])))
         sys.exit(5)
@@ -143,7 +155,7 @@ if args.rotors:
 
 # Process rotor ring settings
 if args.rings:
-    settings['rings'] = args.rings.replace(',', ' ').replace('/', ' ').upper().split()
+    settings['rings'] = split_parameter(args.rings)
     if len(settings['rings']) == 1:
         settings['rings'] = list(settings['rings'][0])
     if not len(settings['rings']) == 3:
@@ -168,7 +180,7 @@ if args.rings:
 
 # Process rotor ring setup
 if args.setup:
-    settings['setup'] = args.setup.replace(',', ' ').replace('/', ' ').upper().split()
+    settings['setup'] = split_parameter(args.setup)
     if len(settings['setup']) == 1:
         settings['setup'] = list(settings['setup'][0])
     if not len(settings['setup']) == 3:
